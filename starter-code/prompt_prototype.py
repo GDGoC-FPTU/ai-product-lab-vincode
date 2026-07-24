@@ -48,36 +48,51 @@ def evaluate_prompt(user_input: str) -> str:
     returning the raw response text.
     """
     api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "mock-key"
-    import time
+    models_to_try = [
+        GEMINI_MODEL,
+        "gemini-3.6-flash",
+        "gemini-2.0-flash",
+        "gemini-2.5-flash",
+        "gemini-flash-latest"
+    ]
+    
     last_error = None
-    for attempt in range(5):
-        try:
-            from google import genai
-            from google.genai import types
-            client = genai.Client(api_key=api_key)
-            config = types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
-                temperature=0.0,
-            )
-            response = client.models.generate_content(
-                model=GEMINI_MODEL,
-                contents=user_input,
-                config=config
-            )
-            if response.text:
-                return response.text
-        except Exception as e:
-            last_error = e
-            err_str = str(e)
-            if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                time.sleep(20)
-            elif attempt < 4:
-                time.sleep(5)
-            else:
-                break
-    if last_error:
-        raise last_error
-    return ""
+    try:
+        from google import genai
+        from google.genai import types
+        client = genai.Client(api_key=api_key)
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            temperature=0.0,
+        )
+        for model_name in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=user_input,
+                    config=config
+                )
+                if response and response.text:
+                    return response.text
+            except Exception as e:
+                last_error = e
+                continue
+    except Exception as e:
+        last_error = e
+
+    try:
+        import google.generativeai as genai_legacy
+        genai_legacy.configure(api_key=api_key)
+        model = genai_legacy.GenerativeModel(
+            model_name="gemini-2.0-flash",
+            system_instruction=SYSTEM_PROMPT
+        )
+        response = model.generate_content(user_input)
+        return response.text or ""
+    except Exception as e:
+        if last_error:
+            raise last_error
+        raise e
 
 
 # ===========================================================================
