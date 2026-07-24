@@ -8,7 +8,16 @@
 **Xanh SM Intelligent Dispatcher Co-pilot for EV Battery Depletion**
 
 ---
-
+# 0. Thong tin nhom
+Ten nhom: VinCode
+Thanh vien: Dien ten va MSSV cac thanh vien tai day truoc khi nop bai.
+Nguyen Thanh Duy - 2A202601599
+Nguyen Minh Triet - 2A202601173
+Nguyen Hong Yen - 2A202601065
+Nguyen Thi Mung - 2A202601571
+Dong Dai Huy - 2A202601901
+Cong ty thanh vien duoc chon: Xanh SM / GSM
+Don vi cong nghe gia dinh: Vin Smart Future
 # 1. Selected Problem
 
 Nhóm lựa chọn bài toán **hỗ trợ điều phối viên (Dispatcher) của Xanh SM xử lý các trường hợp xe điện sắp hết pin**.
