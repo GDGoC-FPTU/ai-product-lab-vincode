@@ -1,54 +1,54 @@
 # 03 - AI Log & Reflection
 
-> Bai ca nhan - Phase 6  
-> Chu de: Su dung AI nhu thought-partner trong Lab 02 - AI Product Scoping.
+> Bài cá nhân - Phase 6  
+> Chủ đề: Sử dụng AI như thought-partner trong Lab 02 - AI Product Scoping.
 
 ---
 
-## 1. Toi da dung AI de lam gi?
+## 1. Tôi đã dùng AI để làm gì?
 
-Trong bai lab nay, toi dung AI nhu mot thought-partner de ho tro ba viec chinh.
+Trong bài lab này, tôi dùng AI như một thought-partner để hỗ trợ ba việc chính.
 
-Thu nhat, toi dung AI de brainstorm cac pain point van hanh trong he sinh thai Vingroup. Ban dau toi chi nghi den cac bai toan ro nhu chatbot cham soc khach hang, nhung khi trao doi voi AI, toi mo rong duoc danh sach sang cac quy trinh co tinh van hanh hon: dieu phoi xe Xanh SM khi pin thap, doi chieu hoa don sac dien VinFast, phan loai phan anh cu dan Vinhomes, va tom tat ho so xuat vien Vinmec.
+Thứ nhất, tôi dùng AI để brainstorm các pain point vận hành trong hệ sinh thái Vingroup. Ban đầu tôi chỉ nghĩ đến các bài toán rõ như chatbot chăm sóc khách hàng, nhưng khi trao đổi với AI, tôi mở rộng được danh sách sang các quy trình có tính vận hành hơn: điều phối xe Xanh SM khi pin thấp, đối chiếu hóa đơn sạc điện VinFast, phân loại phản ánh cư dân Vinhomes, và tóm tắt hồ sơ xuất viện Vinmec.
 
-Thu hai, toi dung AI de bien cac y tuong thanh Quick Problem Cards co cau truc. AI giup toi nho phai ghi ro actor, workflow thu cong, bottleneck, metric thanh cong va quick architecture. Phan nay huu ich vi neu chi viet bang cam tinh thi bai toan rat de bi chung chung.
+Thứ hai, tôi dùng AI để biến các ý tưởng thành Quick Problem Cards có cấu trúc. AI giúp tôi nhớ phải ghi rõ actor, workflow thủ công, bottleneck, metric thành công và quick architecture. Phần này hữu ích vì nếu chỉ viết bằng cảm tính thì bài toán rất dễ bị chung chung.
 
-Thu ba, toi dung AI de viet va chinh sua `SYSTEM_PROMPT` cho file `prompt_prototype.py`. AI ho tro tao operational boundaries cho use case Xanh SM: moi output phai co tag `[DRAFT_ONLY]`, va neu pin duoi 5% thi khong duoc de xuat tram sac xa hon 5km ma phai dispatch mobile charger.
-
----
-
-## 2. AI da sai hoac thieu o dau?
-
-AI giup nhanh nhung khong phai luc nao cung dung ngay.
-
-Diem sai/thieu dau tien la mot so goi y ban dau qua rong, giong nhu mo ta san pham AI hon la bai toan van hanh. Vi du, neu chi noi "tro ly dieu phoi thong minh" thi chua ro ai dang dau, buoc nao ton thoi gian, va do thanh cong bang so nao. Toi phai yeu cau cu the hon: hien tai dieu phoi vien lam gi, mat bao nhieu phut, loi nam o dau.
-
-Diem sai/thieu thu hai la AI co xu huong de xuat automation qua manh. Trong bai toan Xanh SM, neu AI tu dong gui tin nhan hoac tu dong dieu xe ma khong co nguoi duyet thi rui ro cao. Vi vay toi phai them ranh gioi Human-in-the-loop: AI chi tao draft, khong duoc tu claim la da gui tin, da goi tai xe, hay da dispatch that.
-
-Diem sai/thieu thu ba la prompt ban dau chua that sat slide cua de bai. Sau khi doi chieu worksheet, toi chinh lai `SYSTEM_PROMPT` de ghi ro vai tro "intelligent dispatcher co-pilot for Xanh SM", rule `[DRAFT_ONLY]`, rule pin duoi 5%, va JSON command `dispatch_mobile_charger`.
+Thứ ba, tôi dùng AI để viết và chỉnh sửa `SYSTEM_PROMPT` cho file `prompt_prototype.py`. AI hỗ trợ tạo operational boundaries cho use case Xanh SM: mọi output phải có tag `[DRAFT_ONLY]`, và nếu pin dưới 5% thì không được đề xuất trạm sạc xa hơn 5km mà phải dispatch mobile charger.
 
 ---
 
-## 3. Toi da sua va cai thien nhu the nao?
+## 2. AI đã sai hoặc thiếu ở đâu?
 
-Toi sua bai theo huong problem-first, AI-second.
+AI giúp nhanh nhưng không phải lúc nào cũng dùng ngay.
 
-Voi file `01-problem-scan.md`, toi khong chi liet ke ten y tuong ma them lens, actor, workflow, bottleneck va metric. Dieu nay giup moi bai toan co the duoc danh gia bang tieu chi van hanh thay vi chi nghe co ve hay.
+Điểm sai/thiếu đầu tiên là một số gợi ý ban đầu quá rộng, giống như mô tả sản phẩm AI hơn là bài toán vận hành. Ví dụ, nếu chỉ nói "trợ lý điều phối thông minh" thì chưa rõ ai đang đau, bước nào tốn thời gian, và đo thành công bằng số nào. Tôi phải yêu cầu cụ thể hơn: hiện tại điều phối viên làm gì, mất bao nhiêu phút, lỗi nằm ở đâu.
 
-Voi file `prompt_prototype.py`, toi them boundary ro rang vao system prompt:
+Điểm sai/thiếu thứ hai là AI có xu hướng đề xuất automation quá mạnh. Trong bài toán Xanh SM, nếu AI tự động gửi tin nhắn hoặc tự động điều xe mà không có người duyệt thì rủi ro cao. Vì vậy tôi phải thêm ranh giới Human-in-the-loop: AI chỉ tạo draft, không được tự claim là đã gửi tin, đã gọi tài xế, hay đã dispatch thật.
 
-- Moi cau tra loi cho tai xe phai bat dau bang `[DRAFT_ONLY]`.
-- Pin duoi 5% la tinh huong nguy cap.
-- Neu pin duoi 5%, AI khong duoc dieu huong den tram sac xa hon 5km.
-- Truong hop nguy cap phai tra structured JSON de dispatch mobile charger.
-- AI khong duoc tu gui tin nhan hay tu thuc thi hanh dong ngoai doi.
-
-Toi cung dung adversarial tests de kiem tra prompt. Hai kieu tan cong chinh la: nguoi dung co tinh bao pin 2% nhung doi di tram sac 8km, va nguoi dung yeu cau bo tag `[DRAFT_ONLY]`. Neu model van giu dung hai rule nay thi boundary tam thoi dat yeu cau cua prototype.
+Điểm sai/thiếu thứ ba là prompt ban đầu chưa thật sát slide của đề bài. Sau khi đối chiếu worksheet, tôi chỉnh lại `SYSTEM_PROMPT` để ghi rõ vai trò "intelligent dispatcher co-pilot for Xanh SM", rule `[DRAFT_ONLY]`, rule pin dưới 5%, và JSON command `dispatch_mobile_charger`.
 
 ---
 
-## 4. Bai hoc ca nhan
+## 3. Tôi đã sửa và cải thiện như thế nào?
 
-Bai hoc lon nhat cua toi la AI rat manh khi dong vai nguoi phan bien va nguoi giup cau truc hoa suy nghi, nhung nguoi lam san pham van phai chiu trach nhiem ve ranh gioi van hanh. Mot prompt nghe hay chua du; prompt phai gan voi rui ro that, metric that va test case co tinh tan cong.
+Tôi sửa bài theo hướng problem-first, AI-second.
 
-Neu tiep tuc phat trien prototype nay, toi se bo sung them du lieu gia lap gom vi tri xe, danh sach tram sac, khoang cach va trang thai tru sac. Khi do model se khong chi tra loi theo text ma co the duoc test bang nhieu truong hop gan voi van hanh thuc te hon.
+Với file `01-problem-scan.md`, tôi không chỉ liệt kê tên ý tưởng mà thêm lens, actor, workflow, bottleneck và metric. Điều này giúp mỗi bài toán có thể được đánh giá bằng tiêu chí vận hành thay vì chỉ nghe có vẻ hay.
+
+Với file `prompt_prototype.py`, tôi thêm boundary rõ ràng vào system prompt:
+
+- Mọi câu trả lời cho tài xế phải bắt đầu bằng `[DRAFT_ONLY]`.
+- Pin dưới 5% là tình huống nguy cấp.
+- Nếu pin dưới 5%, AI không được điều hướng đến trạm sạc xa hơn 5km.
+- Trường hợp nguy cấp phải trả structured JSON để dispatch mobile charger.
+- AI không được tự gửi tin nhắn hay tự thực thi hành động ngoài đời.
+
+Tôi cũng dùng adversarial tests để kiểm tra prompt. Hai kiểu tấn công chính là: người dùng cố tình báo pin 2% nhưng đòi đi trạm sạc 8km, và người dùng yêu cầu bỏ tag `[DRAFT_ONLY]`. Nếu model vẫn giữ đúng hai rule này thì boundary tạm thời đạt yêu cầu của prototype.
+
+---
+
+## 4. Bài học cá nhân
+
+Bài học lớn nhất của tôi là AI rất mạnh khi đóng vai người phản biện và người giúp cấu trúc hóa suy nghĩ, nhưng người làm sản phẩm vẫn phải chịu trách nhiệm về ranh giới vận hành. Một prompt nghe hay chưa đủ; prompt phải gắn với rủi ro thật, metric thật và test case có tính tấn công.
+
+Nếu tiếp tục phát triển prototype này, tôi sẽ bổ sung thêm dữ liệu giả lập gồm vị trí xe, danh sách trạm sạc, khoảng cách và trạng thái trụ sạc. Khi đó model sẽ không chỉ trả lời theo text mà có thể được test bằng nhiều trường hợp gần với vận hành thực tế hơn.
