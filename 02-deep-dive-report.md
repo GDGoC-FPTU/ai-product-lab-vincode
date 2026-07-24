@@ -9,7 +9,7 @@
 
 - Tên nhóm: VinCode
 - Thành viên:
-  - Nguyễn Thanh Duy - 2A202601599
+  - Nguyễn Thành Duy - 2A202601599
   - Nguyễn Minh Triết - 2A202601173
   - Nguyễn Hồng Yến - 2A202601065
   - Nguyễn Thị Mừng - 2A202601571
