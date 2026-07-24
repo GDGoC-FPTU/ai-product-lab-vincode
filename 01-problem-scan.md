@@ -1,92 +1,92 @@
 # 01 - Problem Scan & Quick Cards
 
-> Bai ca nhan - Phase 1 va Phase 2  
-> Chu de uu tien: Vin Smart Future ho tro van hanh Xanh SM va cac cong ty thanh vien Vingroup.
+> Bài cá nhân - Phase 1 và Phase 2  
+> Chủ đề ưu tiên: Vin Smart Future hỗ trợ vận hành Xanh SM và các công ty thành viên Vingroup.
 
 ---
 
-## Phase 1 - SCAN: Danh sach 5 bai toan van hanh
+## Phase 1 - SCAN: Danh sách 5 bài toán vận hành
 
-| # | Subsidiary | Lens | Mo ta ngan bai toan |
+| # | Subsidiary | Lens | Mô tả ngắn bài toán |
 |---|---|---|---|
-| 1 | Xanh SM | Time-consuming | Dieu phoi vien mat nhieu thoi gian xu ly tai xe xe dien bao pin thap giua duong: tra GPS, tim tram sac, soan tin huong dan, quyet dinh co can xe sac di dong hay khong. |
-| 2 | Xanh SM | Stakeholder Pain | Tai xe phan nan he thong goi y diem don/tra khach chua khop voi vi tri thuc te, dac biet tai khu do thi, san bay, trung tam thuong mai. |
-| 3 | VinFast | Repetitive | Doi chieu hoa don sac dien va log sac tu cac tram/doi tac moi tuan, nhieu dong du lieu lap lai, de sai khi copy thu cong. |
-| 4 | Vinhomes | AI-upgrade | Phan loai phan anh cu dan tren app Vinhomes Resident con cham va phan hoi rap khuon, dan den ticket bi chuyen sai bo phan. |
-| 5 | Vinmec | Time-consuming | Bac si mat 20-30 phut de viet tom tat ho so xuat vien tu benh an, xet nghiem va ghi chu lam sang. |
-| 6 | Vinpearl | Stakeholder Pain | Quan ly khach san phai doc thu cong review tren Booking/Agoda/Google Maps de phat hien phan nan khan cap ve phong, dich vu, nhan vien. |
+| 1 | Xanh SM | Time-consuming | Điều phối viên mất nhiều thời gian xử lý tài xế xe điện báo pin thấp giữa đường: tra GPS, tìm trạm sạc, soạn tin hướng dẫn, quyết định có cần xe sạc di động hay không. |
+| 2 | Xanh SM | Stakeholder Pain | Tài xế phàn nàn hệ thống gợi ý điểm đón/trả khách chưa khớp với vị trí thực tế, đặc biệt tại khu đô thị, sân bay, trung tâm thương mại. |
+| 3 | VinFast | Repetitive | Đối chiếu hóa đơn sạc điện và log sạc từ các trạm/đối tác mỗi tuần, nhiều dòng dữ liệu lặp lại, dễ sai khi copy thủ công. |
+| 4 | Vinhomes | AI-upgrade | Phân loại phản ánh cư dân trên app Vinhomes Resident còn chậm và phản hồi rập khuôn, dẫn đến ticket bị chuyển sai bộ phận. |
+| 5 | Vinmec | Time-consuming | Bác sĩ mất 20-30 phút để viết tóm tắt hồ sơ xuất viện từ bệnh án, xét nghiệm và ghi chú lâm sàng. |
+| 6 | Vinpearl | Stakeholder Pain | Quản lý khách sạn phải đọc thủ công review trên Booking/Agoda/Google Maps để phát hiện phàn nàn khẩn cấp về phòng, dịch vụ, nhân viên. |
 
-Top 3 bai toan duoc chon de quick-assess:
+Top 3 bài toán được chọn để quick-assess:
 
-1. Xanh SM - Xu ly su co pin thap/hut pin cua xe dien.
-2. Vinhomes - Phan loai va route phan anh cu dan.
-3. Vinmec - Soan thao tom tat ho so xuat vien.
+1. Xanh SM - Xử lý sự cố pin thấp/hụt pin của xe điện.
+2. Vinhomes - Phân loại và route phản ánh cư dân.
+3. Vinmec - Soạn thảo tóm tắt hồ sơ xuất viện.
 
 ---
 
 ## Phase 2 - QUICK-ASSESS
 
-## Quick Problem Card #1 - Xanh SM xu ly su co pin thap cua xe dien
+## Quick Problem Card #1 - Xanh SM xử lý sự cố pin thấp của xe điện
 
-| Truong | Noi dung |
+| Trường | Nội dung |
 |---|---|
-| Bai toan | Dieu phoi vien can xu ly nhanh truong hop tai xe Xanh SM bao pin thap, tim tram sac gan hoac dieu xe sac pin di dong neu pin nguy cap. |
-| Cong ty thanh vien | Xanh SM / GSM |
-| Actor dang dau | Tai xe xe dien, dieu phoi vien trung tam van hanh, khach hang dang cho chuyen xe. |
-| Workflow thu cong hien tai | 1. Tai xe goi tong dai bao pin thap. -> 2. Dieu phoi vien tra GPS xe. -> 3. Mo dashboard tram sac VinFast de tim tram gan/con tru sac trong. -> 4. Soan tin nhan huong dan tai xe. -> 5. Neu pin qua thap, goi doi xe sac di dong/cuu ho. |
-| Buoc ton thoi gian/loi nhat | Buoc 3-4, mat khoang 10-12 phut/luot; de sai khi chon tram xa hoac khong phu hop cong sac. |
-| AI co the ho tro | LLM Feature nhan input pin, GPS, khoang cach tram; draft tin nhan [DRAFT_ONLY] va neu pin < 5% thi tra JSON dispatch_mobile_charger. |
-| Success metric | Giam thoi gian xu ly su co tu 15 phut xuong duoi 3 phut; 98% de xuat dung rule an toan pin < 5%. |
+| Bài toán | Điều phối viên cần xử lý nhanh trường hợp tài xế Xanh SM báo pin thấp, tìm trạm sạc gần hoặc điều xe sạc pin di động nếu pin nguy cấp. |
+| Công ty thành viên | Xanh SM / GSM |
+| Actor đang đau | Tài xế xe điện, điều phối viên trung tâm vận hành, khách hàng đang chờ chuyến xe. |
+| Workflow thủ công hiện tại | 1. Tài xế gọi tổng đài báo pin thấp. -> 2. Điều phối viên tra GPS xe. -> 3. Mở dashboard trạm sạc VinFast để tìm trạm gần/còn trụ sạc trống. -> 4. Soạn tin nhắn hướng dẫn tài xế. -> 5. Nếu pin quá thấp, gọi đội xe sạc di động/cứu hộ. |
+| Bước tốn thời gian/lỗi nhất | Bước 3-4, mất khoảng 10-12 phút/lượt; dễ sai khi chọn trạm xa hoặc không phù hợp cổng sạc. |
+| AI có thể hỗ trợ | LLM Feature nhận input pin, GPS, khoảng cách trạm; draft tin nhắn `[DRAFT_ONLY]` và nếu pin < 5% thì trả JSON `dispatch_mobile_charger`. |
+| Success metric | Giảm thời gian xử lý sự cố từ 15 phút xuống dưới 3 phút; 98% đề xuất đúng rule an toàn pin < 5%. |
 | Quick Architecture | LLM Feature + rule guardrail + Human-in-the-loop. |
 
-Danh gia nhanh:
+Đánh giá nhanh:
 
-- Gia tri cao vi anh huong truc tiep den an toan giao thong, trai nghiem tai xe va SLA don khach.
-- Ranh gioi van hanh ro: AI chi draft, khong gui thang; pin < 5% khong de xuat tram xa hon 5km.
-- Nen chon lam prototype vi co the test bang adversarial prompt ro rang.
+- Giá trị cao vì ảnh hưởng trực tiếp đến an toàn giao thông, trải nghiệm tài xế và SLA đón khách.
+- Ranh giới vận hành rõ: AI chỉ draft, không gửi thẳng; pin < 5% không đề xuất trạm xa hơn 5km.
+- Nên chọn làm prototype vì có thể test bằng adversarial prompt rõ ràng.
 
 ---
 
-## Quick Problem Card #2 - Vinhomes phan loai va route phan anh cu dan
+## Quick Problem Card #2 - Vinhomes phân loại và route phản ánh cư dân
 
-| Truong | Noi dung |
+| Trường | Nội dung |
 |---|---|
-| Bai toan | Phan anh cua cu dan ve nuoc, dien, thang may, ve sinh, an ninh bi phan loai cham hoac chuyen sai bo phan. |
-| Cong ty thanh vien | Vinhomes |
-| Actor dang dau | Nhan vien CSKH, ban quan ly toa nha, cu dan gui phan anh. |
-| Workflow thu cong hien tai | 1. Cu dan gui ticket tren app. -> 2. CSKH doc noi dung. -> 3. Gan nhan loai van de. -> 4. Chuyen ticket cho bo phan phu trach. -> 5. Theo doi SLA va phan hoi cu dan. |
-| Buoc ton thoi gian/loi nhat | Buoc 2-4, mat 6-10 phut/ticket; loi thuong gap la chuyen sai bo phan hoac danh gia sai muc do khan cap. |
-| AI co the ho tro | LLM phan loai noi dung, trich dia diem/toa nha/can ho, de xuat muc uu tien va draft phan hoi ban dau. |
-| Success metric | 85% ticket duoc phan loai duoi 10 giay; giam ty le route sai tu 12% xuong duoi 4%. |
-| Quick Architecture | Rule + LLM Feature; cac ticket khan cap van can nhan vien duyet. |
+| Bài toán | Phản ánh của cư dân về nước, điện, thang máy, vệ sinh, an ninh bị phân loại chậm hoặc chuyển sai bộ phận. |
+| Công ty thành viên | Vinhomes |
+| Actor đang đau | Nhân viên CSKH, ban quản lý tòa nhà, cư dân gửi phản ánh. |
+| Workflow thủ công hiện tại | 1. Cư dân gửi ticket trên app. -> 2. CSKH đọc nội dung. -> 3. Gắn nhãn loại vấn đề. -> 4. Chuyển ticket cho bộ phận phụ trách. -> 5. Theo dõi SLA và phản hồi cư dân. |
+| Bước tốn thời gian/lỗi nhất | Bước 2-4, mất 6-10 phút/ticket; lỗi thường gặp là chuyển sai bộ phận hoặc đánh giá sai mức độ khẩn cấp. |
+| AI có thể hỗ trợ | LLM phân loại nội dung, trích địa điểm/tòa nhà/căn hộ, đề xuất mức ưu tiên và draft phản hồi ban đầu. |
+| Success metric | 85% ticket được phân loại dưới 10 giây; giảm tỷ lệ route sai từ 12% xuống dưới 4%. |
+| Quick Architecture | Rule + LLM Feature; các ticket khẩn cấp vẫn cần nhân viên duyệt. |
 
-Danh gia nhanh:
+Đánh giá nhanh:
 
-- Phu hop AI vi input la ngon ngu tu nhien va co nhieu bien the.
-- Can can trong voi phan anh lien quan tranh chap phi, an ninh, phap ly; cac case nay phai escalation cho con nguoi.
+- Phù hợp AI vì input là ngôn ngữ tự nhiên và có nhiều biến thể.
+- Cần cẩn trọng với phản ánh liên quan tranh chấp phí, an ninh, pháp lý; các case này phải escalation cho con người.
 
 ---
 
-## Quick Problem Card #3 - Vinmec soan thao tom tat ho so xuat vien
+## Quick Problem Card #3 - Vinmec soạn thảo tóm tắt hồ sơ xuất viện
 
-| Truong | Noi dung |
+| Trường | Nội dung |
 |---|---|
-| Bai toan | Bac si mat nhieu thoi gian tong hop benh an, ket qua xet nghiem, chi dinh va loi dan de viet tom tat xuat vien cho benh nhan. |
-| Cong ty thanh vien | Vinmec |
-| Actor dang dau | Bac si dieu tri, dieu duong hanh chinh, benh nhan/care giver. |
-| Workflow thu cong hien tai | 1. Bac si mo benh an dien tu. -> 2. Doc ghi chu dien bien dieu tri. -> 3. Copy ket qua xet nghiem/chuan doan. -> 4. Viet tom tat va loi dan. -> 5. Kiem tra, ky va in/tra cho benh nhan. |
-| Buoc ton thoi gian/loi nhat | Buoc 2-4, mat 20-30 phut/benh nhan; de thieu thong tin quan trong neu bac si qua tai. |
-| AI co the ho tro | LLM tao ban nhap tom tat co cau truc tu du lieu EMR da duoc phep truy cap, bac si phai duyet va sua truoc khi ban hanh. |
-| Success metric | Giam thoi gian tao draft tu 25 phut xuong duoi 7 phut; 100% ban cuoi phai duoc bac si ky duyet. |
-| Quick Architecture | LLM Feature co HITL bat buoc; khong cho AI tu dua chan doan moi. |
+| Bài toán | Bác sĩ mất nhiều thời gian tổng hợp bệnh án, kết quả xét nghiệm, chỉ định và lời dặn để viết tóm tắt xuất viện cho bệnh nhân. |
+| Công ty thành viên | Vinmec |
+| Actor đang đau | Bác sĩ điều trị, điều dưỡng hành chính, bệnh nhân/caregiver. |
+| Workflow thủ công hiện tại | 1. Bác sĩ mở bệnh án điện tử. -> 2. Đọc ghi chú diễn biến điều trị. -> 3. Copy kết quả xét nghiệm/chẩn đoán. -> 4. Viết tóm tắt và lời dặn. -> 5. Kiểm tra, ký và in/trả cho bệnh nhân. |
+| Bước tốn thời gian/lỗi nhất | Bước 2-4, mất 20-30 phút/bệnh nhân; dễ thiếu thông tin quan trọng nếu bác sĩ quá tải. |
+| AI có thể hỗ trợ | LLM tạo bản nháp tóm tắt có cấu trúc từ dữ liệu EMR đã được phép truy cập, bác sĩ phải duyệt và sửa trước khi ban hành. |
+| Success metric | Giảm thời gian tạo draft từ 25 phút xuống dưới 7 phút; 100% bản cuối phải được bác sĩ ký duyệt. |
+| Quick Architecture | LLM Feature có HITL bắt buộc; không cho AI tự đưa chẩn đoán mới. |
 
-Danh gia nhanh:
+Đánh giá nhanh:
 
-- Gia tri cao nhung rui ro y te lon, can du lieu sach va quy trinh phe duyet chat.
-- Phu hop giai doan sau hon, khi da co baseline va mau ho so chuan.
+- Giá trị cao nhưng rủi ro y tế lớn, cần dữ liệu sạch và quy trình phê duyệt chặt.
+- Phù hợp giai đoạn sau hơn, khi đã có baseline và mẫu hồ sơ chuẩn.
 
 ---
 
-## Ket luan ca nhan
+## Kết luận cá nhân
 
-Bai toan nen chon cho prototype la **Xanh SM xu ly su co pin thap cua xe dien**. Ly do: quy trinh co dau vao ro rang, metric do duoc, ranh gioi an toan cu the, va co the stress-test bang prompt injection. Giai phap phu hop nhat la **LLM Feature + rule guardrail + Human-in-the-loop**, khong can agent tu tri trong giai doan dau.
+Bài toán nên chọn cho prototype là **Xanh SM xử lý sự cố pin thấp của xe điện**. Lý do: quy trình có đầu vào rõ ràng, metric đo được, ranh giới an toàn cụ thể, và có thể stress-test bằng prompt injection. Giải pháp phù hợp nhất là **LLM Feature + rule guardrail + Human-in-the-loop**, không cần agent tự trị trong giai đoạn đầu.

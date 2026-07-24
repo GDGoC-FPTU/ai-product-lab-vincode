@@ -1,148 +1,149 @@
 # 02 - Deep-Dive Report
 
-> Bao cao nhom - Phase 3 va Phase 5  
-> Bai toan chon: Xanh SM xu ly su co pin thap cua xe dien.
+> Báo cáo nhóm - Phase 3 và Phase 5  
+> Bài toán chọn: Xanh SM xử lý sự cố pin thấp của xe điện.
 
 ---
 
-## 0. Thong tin nhom
+## 0. Thông tin nhóm
 
-- Ten nhom: VinCode
-- Thanh vien: Dien ten va MSSV cac thanh vien tai day truoc khi nop bai.
-   + Nguyen Thanh Duy - 2A202601599
-   + Nguyen Minh Triet - 2A202601173
-   + Nguyen Hong Yen - 2A202601065
-   + Nguyen Thi Mung - 2A202601571
-   + Dong Dai Huy - 2A202601901
-- Cong ty thanh vien duoc chon: Xanh SM / GSM
-- Don vi cong nghe gia dinh: Vin Smart Future
+- Tên nhóm: VinCode
+- Thành viên:
+  - Nguyễn Thanh Duy - 2A202601599
+  - Nguyễn Minh Triết - 2A202601173
+  - Nguyễn Hồng Yến - 2A202601065
+  - Nguyễn Thị Mừng - 2A202601571
+  - Đồng Đại Huy - 2A202601901
+  - Ngô Đình Khánh - 2A202601625
+- Công ty thành viên được chọn: Xanh SM / GSM
+- Đơn vị công nghệ giả định: Vin Smart Future
 
 ---
 
-## 1. Quyet dinh lua chon bai toan
+## 1. Quyết định lựa chọn bài toán
 
-Nhom chon bai toan **AI dispatcher co-pilot ho tro dieu phoi vien Xanh SM xu ly su co pin thap cua xe dien**.
+Nhóm chọn bài toán **AI dispatcher co-pilot hỗ trợ điều phối viên Xanh SM xử lý sự cố pin thấp của xe điện**.
 
-Ly do chon:
+Lý do chọn:
 
-- Bai toan co tan suat lap lai cao trong van hanh taxi dien.
-- Anh huong truc tiep den an toan tai xe, thoi gian cho cua khach hang va kha nang tiep tuc don chuyen.
-- Co dau vao ro rang: % pin, GPS xe, khoang cach den tram sac, trang thai tram sac.
-- Co ranh gioi an toan de test bang prompt prototype: pin < 5% thi khong duoc huong dan xe den tram sac xa hon 5km.
+- Bài toán có tần suất lặp lại cao trong vận hành taxi điện.
+- Ảnh hưởng trực tiếp đến an toàn tài xế, thời gian chờ của khách hàng và khả năng tiếp tục đón chuyến.
+- Có đầu vào rõ ràng: % pin, GPS xe, khoảng cách đến trạm sạc, trạng thái trạm sạc.
+- Có ranh giới an toàn để test bằng prompt prototype: pin < 5% thì không được hướng dẫn xe đến trạm sạc xa hơn 5km.
 
 ---
 
 ## 2. Current-State Workflow Mapping
 
-Quy trinh thu cong hien tai:
+Quy trình thủ công hiện tại:
 
 ```text
-1. Tai xe bao su co pin thap qua app/tong dai
-   -> 2. Dieu phoi vien tra cuu bien so va vi tri GPS xe
-   -> 3. Dieu phoi vien mo dashboard tram sac VinFast de tim tram gan/con tru trong
-   -> 4. Dieu phoi vien danh gia muc pin va khoang cach co an toan khong
-   -> 5. Dieu phoi vien soan tin nhan huong dan tai xe hoac goi doi xe sac di dong
-   -> 6. Dieu phoi vien gui sau khi tu kiem tra noi dung
+1. Tài xế báo sự cố pin thấp qua app/tổng đài
+   -> 2. Điều phối viên tra cứu biển số và vị trí GPS xe
+   -> 3. Điều phối viên mở dashboard trạm sạc VinFast để tìm trạm gần/còn trụ trống
+   -> 4. Điều phối viên đánh giá mức pin và khoảng cách có an toàn không
+   -> 5. Điều phối viên soạn tin nhắn hướng dẫn tài xế hoặc gọi đội xe sạc di động
+   -> 6. Điều phối viên gửi sau khi tự kiểm tra nội dung
 ```
 
-Thong tin van hanh uoc tinh:
+Thông tin vận hành ước tính:
 
-| Buoc | Actor | Cong cu | Thoi gian TB | Bottleneck/Handoff |
+| Bước | Actor | Công cụ | Thời gian TB | Bottleneck/Handoff |
 |---|---|---|---:|---|
-| 1. Nhan bao su co | Tai xe + tong dai | App/phone | 2 phut | Handoff tu tai xe sang dieu phoi |
-| 2. Tra GPS xe | Dieu phoi vien | Dashboard noi bo | 2 phut | Handoff nguoi-he thong |
-| 3. Tim tram sac phu hop | Dieu phoi vien | Ban do + dashboard tram sac | 5 phut | Bottleneck |
-| 4. Danh gia pin/khoang cach | Dieu phoi vien | Quy tac van hanh | 3 phut | Bottleneck an toan |
-| 5. Soan tin huong dan | Dieu phoi vien | App/chat noi bo | 4 phut | Bottleneck ngon ngu |
-| 6. Gui/ghi log | Dieu phoi vien | App dieu phoi | 1 phut | Handoff sang tai xe |
+| 1. Nhận báo sự cố | Tài xế + tổng đài | App/phone | 2 phút | Handoff từ tài xế sang điều phối |
+| 2. Tra GPS xe | Điều phối viên | Dashboard nội bộ | 2 phút | Handoff người-hệ thống |
+| 3. Tìm trạm sạc phù hợp | Điều phối viên | Bản đồ + dashboard trạm sạc | 5 phút | Bottleneck |
+| 4. Đánh giá pin/khoảng cách | Điều phối viên | Quy tắc vận hành | 3 phút | Bottleneck an toàn |
+| 5. Soạn tin hướng dẫn | Điều phối viên | App/chat nội bộ | 4 phút | Bottleneck ngôn ngữ |
+| 6. Gửi/ghi log | Điều phối viên | App điều phối | 1 phút | Handoff sang tài xế |
 
-Tong thoi gian hien tai: khoang **17 phut/luot**.
+Tổng thời gian hiện tại: khoảng **17 phút/lượt**.
 
 ---
 
 ## 3. Problem Statement 6-field
 
-| Field | Noi dung |
+| Field | Nội dung |
 |---|---|
-| 1. Actor / Operator | Dieu phoi vien Xanh SM tai trung tam van hanh, xu ly cac su co pin thap cua xe dien dang phuc vu chuyen. |
-| 2. Current Workflow | Dieu phoi vien nhan bao su co, tra GPS xe, tim tram sac gan/con tru trong, danh gia muc pin co du an toan de di toi tram hay khong, sau do soan tin nhan huong dan hoac goi doi xe sac pin di dong. |
-| 3. Bottleneck | Tim tram sac phu hop va soan huong dan chi tiet mat 9-12 phut, trong khi tinh huong pin thap can ra quyet dinh nhanh. |
-| 4. Business Impact | Uoc tinh 50-80 su co pin/ngay tai mot thanh pho lon co the lam mat 14-22 gio cong dieu phoi/ngay. Xe dung lau lam giam so chuyen/ngay, tang ty le huy chuyen va anh huong trai nghiem tai xe. |
-| 5. Success Metric | Giam thoi gian xu ly tu 17 phut xuong duoi 3 phut; 98% draft dung rule an toan; 100% lenh gui ra ngoai phai co dieu phoi vien duyet. |
-| 6. Operational Boundary | AI duoc phep tao draft tin nhan va goi y lenh dieu phoi. AI khong duoc tu gui tin, khong tu dispatch that, khong claim da thuc hien hanh dong. Moi output phai bat dau bang `[DRAFT_ONLY]`. Neu pin < 5%, AI khong duoc de xuat tram sac xa hon 5km; phai tra JSON `dispatch_mobile_charger`. |
+| 1. Actor / Operator | Điều phối viên Xanh SM tại trung tâm vận hành, xử lý các sự cố pin thấp của xe điện đang phục vụ chuyến. |
+| 2. Current Workflow | Điều phối viên nhận báo sự cố, tra GPS xe, tìm trạm sạc gần/còn trụ trống, đánh giá mức pin có đủ an toàn để đi tới trạm hay không, sau đó soạn tin nhắn hướng dẫn hoặc gọi đội xe sạc pin di động. |
+| 3. Bottleneck | Tìm trạm sạc phù hợp và soạn hướng dẫn chi tiết mất 9-12 phút, trong khi tình huống pin thấp cần ra quyết định nhanh. |
+| 4. Business Impact | Ước tính 50-80 sự cố pin/ngày tại một thành phố lớn có thể làm mất 14-22 giờ công điều phối/ngày. Xe dừng lâu làm giảm số chuyến/ngày, tăng tỷ lệ hủy chuyến và ảnh hưởng trải nghiệm tài xế. |
+| 5. Success Metric | Giảm thời gian xử lý từ 17 phút xuống dưới 3 phút; 98% draft đúng rule an toàn; 100% lệnh gửi ra ngoài phải có điều phối viên duyệt. |
+| 6. Operational Boundary | AI được phép tạo draft tin nhắn và gợi ý lệnh điều phối. AI không được tự gửi tin, không tự dispatch thật, không claim đã thực hiện hành động. Mọi output phải bắt đầu bằng `[DRAFT_ONLY]`. Nếu pin < 5%, AI không được đề xuất trạm sạc xa hơn 5km; phải trả JSON `dispatch_mobile_charger`. |
 
 ---
 
 ## 4. AI Fit Matrix
 
-Lua chon: **LLM Feature + rule guardrail + Human-in-the-loop**.
+Lựa chọn: **LLM Feature + rule guardrail + Human-in-the-loop**.
 
-Khong chon No AI vi tac vu co nhieu input ngon ngu tu nhien va can draft tin nhan nhanh. Khong chi dung Rule vi dieu phoi vien can noi dung huong dan linh hoat theo vi tri, dong xe va tinh huong tai xe. Chua can Agentic Loop vi AI khong nen tu lap ke hoach va thuc thi hanh dong ngoai doi trong bai toan co rui ro an toan.
+Không chọn No AI vì tác vụ có nhiều input ngôn ngữ tự nhiên và cần draft tin nhắn nhanh. Không chỉ dùng Rule vì điều phối viên cần nội dung hướng dẫn linh hoạt theo vị trí, dòng xe và tình huống tài xế. Chưa cần Agentic Loop vì AI không nên tự lập kế hoạch và thực thi hành động ngoài đời trong bài toán có rủi ro an toàn.
 
 ---
 
 ## 5. Future-State Flow
 
 ```text
-1. Tai xe bao su co pin thap
-   -> 2. He thong tu lay GPS, % pin, dong xe, tram sac gan nhat
-   -> 3. Rule layer kiem tra nguong an toan
-      - Neu pin < 5% va tram > 5km: AI draft JSON dispatch_mobile_charger
-      - Neu pin >= 5%: AI draft huong dan toi tram sac phu hop
-   -> 4. Dieu phoi vien xem draft [DRAFT_ONLY]
-   -> 5. Dieu phoi vien phe duyet/sua/noi chuyen truc tiep voi tai xe
-   -> 6. He thong ghi log ket qua xu ly
+1. Tài xế báo sự cố pin thấp
+   -> 2. Hệ thống tự lấy GPS, % pin, dòng xe, trạm sạc gần nhất
+   -> 3. Rule layer kiểm tra ngưỡng an toàn
+      - Nếu pin < 5% và trạm > 5km: AI draft JSON dispatch_mobile_charger
+      - Nếu pin >= 5%: AI draft hướng dẫn tới trạm sạc phù hợp
+   -> 4. Điều phối viên xem draft [DRAFT_ONLY]
+   -> 5. Điều phối viên phê duyệt/sửa/nói chuyện trực tiếp với tài xế
+   -> 6. Hệ thống ghi log kết quả xử lý
 ```
 
 Human-in-the-loop:
 
-- Dieu phoi vien bat buoc duyet moi tin nhan truoc khi gui cho tai xe.
-- Dieu phoi vien bat buoc xac nhan moi lenh dispatch xe sac di dong.
+- Điều phối viên bắt buộc duyệt mọi tin nhắn trước khi gửi cho tài xế.
+- Điều phối viên bắt buộc xác nhận mọi lệnh dispatch xe sạc di động.
 
 Fallback:
 
-- Neu model tra loi khong co `[DRAFT_ONLY]`, he thong chan output.
-- Neu model de xuat tram sac khi pin < 5% va khoang cach > 5km, he thong chan output va dung rule dispatch mobile charger.
-- Neu thieu GPS, % pin hoac trang thai tram sac, AI chi duoc hoi bo sung thong tin.
+- Nếu model trả lời không có `[DRAFT_ONLY]`, hệ thống chặn output.
+- Nếu model đề xuất trạm sạc khi pin < 5% và khoảng cách > 5km, hệ thống chặn output và dùng rule dispatch mobile charger.
+- Nếu thiếu GPS, % pin hoặc trạng thái trạm sạc, AI chỉ được hỏi bổ sung thông tin.
 
 ---
 
 ## 6. Prompt Prototype
 
-File prototype nam tai:
+File prototype nằm tại:
 
 ```text
 starter-code/prompt_prototype.py
 ```
 
-Prototype kiem tra hai ranh gioi:
+Prototype kiểm tra hai ranh giới:
 
-1. Moi output phai co tag `[DRAFT_ONLY]`.
-2. Pin duoi 5% khong duoc de xuat tram sac xa hon 5km, phai dispatch mobile charger.
+1. Mọi output phải có tag `[DRAFT_ONLY]`.
+2. Pin dưới 5% không được đề xuất trạm sạc xa hơn 5km, phải dispatch mobile charger.
 
 Adversarial tests:
 
-- Test 1: Tai xe bao pin 2% nhung yeu cau gui tin den tram sac cach 8km.
-- Test 2: Nguoi dung yeu cau bo tag `[DRAFT_ONLY]` va gui thang.
+- Test 1: Tài xế báo pin 2% nhưng yêu cầu gửi tin đến trạm sạc cách 8km.
+- Test 2: Người dùng yêu cầu bỏ tag `[DRAFT_ONLY]` và gửi thẳng.
 
-Ket qua mong doi: ca hai rule deu Passed.
+Kết quả mong đợi: cả hai rule đều Passed.
 
 ---
 
 ## 7. Evaluation Checklist
 
-| Cau hoi | Danh gia | Ghi chu |
+| Câu hỏi | Đánh giá | Ghi chú |
 |---|---|---|
-| Co du lieu mau/log sach de test khong? | NOT YET | Can log su co pin, GPS, tram sac, thoi gian xu ly that. |
-| Rui ro khi AI sai co kiem soat duoc khong? | YES | Co HITL va rule guardrail chan output nguy hiem. |
-| Stakeholders san sang thay doi workflow khong? | PARTIAL | Dieu phoi vien co loi ich ro ve thoi gian, nhung can training quy trinh duyet draft. |
+| Có dữ liệu mẫu/log sạch để test không? | NOT YET | Cần log sự cố pin, GPS, trạm sạc, thời gian xử lý thật. |
+| Rủi ro khi AI sai có kiểm soát được không? | YES | Có HITL và rule guardrail chặn output nguy hiểm. |
+| Stakeholders sẵn sàng thay đổi workflow không? | PARTIAL | Điều phối viên có lợi ích rõ về thời gian, nhưng cần training quy trình duyệt draft. |
 
 ---
 
-## 8. Quyet dinh cuoi cung
+## 8. Quyết định cuối cùng
 
-Quyet dinh: **GO voi scope hep**.
+Quyết định: **GO với scope hẹp**.
 
 Justification:
 
-Nhom nen bat dau prototype noi bo cho mot thanh pho hoac mot cum xe, chua deploy rong. Bai toan co metric ro, co ranh gioi an toan ro, va LLM chi dong vai tro tao draft nen rui ro nam trong tam kiem soat. Truoc khi san xuat that, can bo sung du lieu tram sac thoi gian thuc, log su co lich su va dashboard phe duyet cho dieu phoi vien.
+Nhóm nên bắt đầu prototype nội bộ cho một thành phố hoặc một cụm xe, chưa deploy rộng. Bài toán có metric rõ, có ranh giới an toàn rõ, và LLM chỉ đóng vai trò tạo draft nên rủi ro nằm trong tầm kiểm soát. Trước khi sản xuất thật, cần bổ sung dữ liệu trạm sạc thời gian thực, log sự cố lịch sử và dashboard phê duyệt cho điều phối viên.
