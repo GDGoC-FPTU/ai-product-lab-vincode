@@ -1,3 +1,4 @@
+#vincode - Ngô Đình Khánh - khanhngodinh7a@gmail.com
 # 03 - AI Log
 
 # AI Usage Reflection

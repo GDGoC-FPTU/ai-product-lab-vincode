@@ -1,3 +1,4 @@
+#vincode - Ngô Đình Khánh - khanhngodinh7a@gmail.com
 # 01 - Problem Scan
 
 ## Phase 1 — SCAN

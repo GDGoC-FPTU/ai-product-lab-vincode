@@ -1,3 +1,4 @@
+#vincode - Ngô Đình Khánh - khanhngodinh7a@gmail.com
 # 02 - Deep Dive Report
 
 # AI Product Deep Dive

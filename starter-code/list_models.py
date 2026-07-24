@@ -1,3 +1,4 @@
+#vincode - Ngô Đình Khánh - khanhngodinh7a@gmail.com
 from google import genai
 import os
 

@@ -1,3 +1,4 @@
+#vincode - Ngô Đình Khánh - khanhngodinh7a@gmail.com
 """
 Day 2 — AI Product Scoping (Vin Smart Future)
 Lightweight Prompt Boundary Prototyping (Starter Code)
